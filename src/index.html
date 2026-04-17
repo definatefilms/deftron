@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEFTRON</title>
+    <style>
+      body { margin: 0; background: #0a0a14; }
+      #error-display { display:none; color:#ff6666; padding:20px; font-family:monospace; font-size:13px; white-space:pre-wrap; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="error-display"></div>
+    <script>
+      window.onerror = function(msg, src, line, col, err) {
+        const d = document.getElementById('error-display');
+        d.style.display = 'block';
+        d.textContent = 'ERROR: ' + msg + '\nFile: ' + src + '\nLine: ' + line + ':' + col + '\n' + (err && err.stack ? err.stack : '');
+      };
+      window.addEventListener('unhandledrejection', function(e) {
+        const d = document.getElementById('error-display');
+        d.style.display = 'block';
+        d.textContent = (d.textContent || '') + '\nUNHANDLED PROMISE: ' + (e.reason && e.reason.stack ? e.reason.stack : e.reason);
+      });
+    </script>
+    <script type="module" src="/main.jsx"></script>
+  </body>
+</html>
